@@ -17,7 +17,7 @@ robot = {'x': 0, 'y': 0}
 turncounter  = "santa"
 
 #starting present
-location["00"] = 1
+location["x0y0"] = 1
 
 def location_change (direction, x, y):
 	if direction is ">":
@@ -43,7 +43,7 @@ for direction in list(data):
 			location_change( direction, santa['x'], santa['y'] )
 
 		print "santas go! %d %d" % (santa['x'],santa['y'])
-		place = ( str(santa['x']) + str(santa['y']) )
+		place = ( "x" + str(santa['x']) + "y" + str(santa['y']) )
 		if place in location:
 			location[place] += 1
 		else:
@@ -55,7 +55,7 @@ for direction in list(data):
 			location_change( direction, robot['x'], robot['y'] )
 
 		print "robot santa go! %d %d" % (robot['x'],robot['y'])
-		place = ( str(robot['x']) + str(robot['y']) )
+		place = ( "x" + str(robot['x']) + "y" + str(robot['y']) )
 		if place in location:
 			location[place] += 1
 		else:
