@@ -8,12 +8,26 @@ while the second half of the characters represent items in the second compartmen
 
 every item type can be converted to a priority
 
+part one:
 Find the item type that appears in both compartments of each rucksack.
 What is the sum of the priorities of those item types?
+
+part two:
+
+Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?
+
+The only way to tell which item type is the right one is by finding the one item type that is common between all three Elves in each group.
+Every set of three lines in your list corresponds to a single group, but each group can have a different badge item type.
+
+The only way to tell which item type is the right one is by finding the one item type that is common between all three Elves in each group.
+Every set of three lines in your list corresponds to a single group, but each group can have a different badge item type.
+
+Priorities for these items must still be found to organize the sticker attachment efforts
+
+Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?
 """
 
-TESTFILE = "day3.test"
-REALFILE = "day3.input"
+FILES = ["day3.test", "day3.input"]
 
 
 def priority(item):
@@ -50,7 +64,11 @@ def contents(filename):
     """
     read in backpack contents
     """
+    counter = 0
     score = 0
+    group_number = 0
+    group = []
+    group_priority = 0
     # Iterate over the lines of the file
     with open(filename, "rt", encoding="utf-8") as filetoread:
         for line in filetoread:
@@ -65,8 +83,29 @@ def contents(filename):
             backpack_score = priority(item)
             # print(backpack_score)
             score = score + backpack_score
-    return score
+            # part two
+            if counter == 0:
+                group.append([line.rstrip()])
+                counter += 1
+            else:
+                group[group_number].append(line.rstrip())
+                if counter < 2:
+                    counter += 1
+                else:
+                    """
+                    this is the third group member,
+                    so reset the counter,
+                    increment the group number
+                    and calculate the group badge priority
+                    """
+                    badge = list(set.intersection(*map(set, group[group_number])))[0]
+                    group_priority = group_priority + priority(badge)
+                    counter = 0
+                    group_number += 1
+
+    return score, group_priority
 
 
-print("Test score: {}".format(contents(TESTFILE)))
-print("Real score: {}".format(contents(REALFILE)))
+for answerfile in FILES:
+    answers = contents(answerfile)
+    print("{} score: {} Group score: {}".format(answerfile, answers[0], answers[1]))
