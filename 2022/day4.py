@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Day 3 of the AOC
+Day 4 of the AOC
 
 Some of the pairs have noticed that one of their assignments fully contains the other. 
 For example, 2-8 fully contains 3-7, and 6-6 is fully contained by 4-6. 
@@ -55,7 +55,7 @@ def assignments(filename):
                 duplicate_count = duplicate_count + 1
                 print("duplicate found, count is: {}".format(duplicate_count))
 
-            if all([int(item) in elf2_assignment for int(item) in elf1_assignment ]):
+            if all([item in elf2_assignment for item in elf1_assignment ]):
                 overlap_count += 1
                 print("overlap found, count is: {}".format(overlap_count))
                 if all([item in elf1_assignment for item in elf2_assignment ]):
